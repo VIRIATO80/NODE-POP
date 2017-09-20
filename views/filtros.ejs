@@ -1,0 +1,26 @@
+<div class="col-lg-3">
+    <h4 class="my-4">Busca tu producto</h1>
+    <div class="list-group bordeAzul">
+            <label for="name">Por nombre:</label>
+            <input type="text" name="name" id="name">
+            <label for="tipo">Modalidad:</label>
+            <select name="tipo" id="tipo">
+                <option value="">Todos</option>
+                <option value="V">Venta</option>
+                <option value="B">Búsqueda</option>
+            </select>            
+            <label>Por categoría:</label>
+            <ul class="tags">
+                <% Tags.forEach(function(tag) { %>
+                    <div class="label label-primary">
+                        <input type="checkbox" id="<%=tag.nombre%>" name="tags" value="<%=tag.nombre%>">
+                        <label for="<%=tag.nombre%>" ><%=tag.nombre%></label>
+                    </div>
+                    <br/>
+                <%});%>
+            </ul>
+            <label for="tipo">Por precio:</label>
+                <input id="slider1" type="range" min="0" max="3" value="0">
+                <span id="mensajeSlider">Desde 10€</span>
+    </div>
+</div>
