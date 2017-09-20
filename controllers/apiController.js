@@ -26,15 +26,6 @@ exports.getListadoTags = async (req, res, next) =>{
     res.json({success: true, rows: Tags});    
 }
 
-/* GET /api/detalle/id Recupera el anuncio con un id dado
-*/
-exports.getDetalleAnuncio = async (req, res, next) => {
-  
-  //Recupera una consulta para recuperar un solo anuncio de la base de datos
-  const idAnuncio =  req.params.id
-  const datosAnuncio = await Anuncio.findOne({_id: idAnuncio});
-  res.json({success: true, result: datosAnuncio}); 
-};
 
 /* GET anuncios filtrados 
 - Lista todos los anuncios de la base de datos en formato JSON o html que cumplen unos determinados criterios
@@ -85,15 +76,19 @@ exports.getAnunciosFiltrados = async (req, res, next) =>{
       }
     }      
 
-
     //Recuperar una lista de anuncios de la base de datos
     const Anuncios = await Anuncio.find(filter);
+    //Si la petición proviene del api, devolvemos JSON
+    res.json(Anuncios);
+}
 
-
-    if(req.baseUrl.indexOf('/api') != -1){//Si la petición proviene del api, devolvemos JSON
-        res.json({success: true, rows: Anuncios});    
-    }else{//Si la petición es para la web, renderizamos el portal y por ello necesitamos también pedir los tags
-        res.render('index', { title: 'NodePop!', Anuncios: Anuncios});
-    }
-    
+/* POST Guarda un anuncio vía POST*/
+exports.guardarAnuncio = async function(req, res, next) {
+  
+  //Recuperamos los datos en el body del método
+  //Creamos un nuevo agente
+  const agente = new Anuncio(req.body);
+  //Lo guardamos en la base de datos
+  const agenteGuardado = await agente.save();
+  res.json({success: true, result: agenteGuardado});
 }

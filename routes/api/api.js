@@ -14,16 +14,11 @@ router.get('/anuncios', catchErrors(apiController.getListadoAnuncios));
 Devuelve los anuncios que cumplen unos determinados criterios*/
 router.get('/busqueda', catchErrors(apiController.getAnunciosFiltrados));
 
-
 /* GET /api/tags
 Lista todos los tags disponibles*/
 router.get('/tags', catchErrors(apiController.getListadoTags));
 
-/* GET /api/detalle/<idAnuncio>
-    Muestra el detalle de un solo anuncio por su id
-*/
-router.get('/detalle/:id', catchErrors(apiController.getDetalleAnuncio));
-
-
-
+/* POST /api/
+Guarda un anuncio vía petición POST*/
+router.post('/', catchErrors(apiController.guardarAnuncio));
 module.exports = router;
