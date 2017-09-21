@@ -21,19 +21,19 @@ const tagsJSON = JSON.parse(fs.readFileSync(__dirname + '/tags.json', 'utf-8'));
 
 
 
-function deleteData() {
+async function deleteData() {
   console.log('Borrando tabla de anuncios...');
-  Anuncio.remove();
+  await Anuncio.remove();
   console.log('Borrando tabla de tags...');
-  Tag.remove();  
+  await Tag.remove();  
   console.log('Datos eliminados.');
 }
 
-function loadData() {
+async function loadData() {
   try {
-    Anuncio.insertMany(anunciosJSON);
+    await Anuncio.insertMany(anunciosJSON);
     console.log('Inserción de anuncios realizada con éxito');
-    Tag.insertMany(tagsJSON);
+    await Tag.insertMany(tagsJSON);
     console.log('Inserción de tags realizada con éxito');    
     process.exit();
   } catch(e) {

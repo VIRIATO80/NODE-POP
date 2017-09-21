@@ -25,18 +25,28 @@ $('#name').on('keyup', function(){
 
 
 //Filtro por categoría de venta / búsqueda
-$('#venta').change(function() {
+$('#modalidad').change(function() {
 
     let valor;
 
-    if($('#venta').val() == 'V'){
+    if($('#modalidad').val() == 'V'){
         valor = true;
-    }else if($('#venta').val() == 'B'){
+    }else if($('#modalidad').val() == 'B'){
         valor= false;
     }else{
         valor = null;
     }
     filtro.venta = valor;
+    llamadaAjax();
+});
+
+//Filtro por tags
+$('.checko').click(function(){
+    var val = [];
+    $(':checkbox:checked').each(function(i){
+      val[i] = $(this).val();
+    });
+    filtro.tags = val;
     llamadaAjax();
 });
 
@@ -109,12 +119,12 @@ function pintarElemento(anuncio){
                 <a href="#">${anuncio.nombre}</a>
             </h4>
             <h5>${anuncio.precio}€</h5>
-            <p class="card-text"><${anuncio.descripcion}</p>
+            <p class="card-text">${anuncio.descripcion}</p>
         </div>
         <div class="card-footer">`;
         
         for (var i = 0; i < anuncio.tags.length; i++) {
-            html+=`<span class="label label-primary">${anuncio.tags[i]}</span>`;
+            html+=`&nbsp;<span class="label label-primary">${anuncio.tags[i]}</span>`;
         }
             
     html+=`</div>

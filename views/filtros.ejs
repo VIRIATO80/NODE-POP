@@ -4,7 +4,7 @@
             <label for="name">Por nombre:</label>
             <input type="text" name="name" id="name">
             <label for="tipo">Modalidad:</label>
-            <select name="venta" id="venta">
+            <select name="modalidad" id="modalidad">
                 <option value="">Todos</option>
                 <option value="V">Venta</option>
                 <option value="B">Búsqueda</option>
@@ -13,7 +13,7 @@
             <ul class="tags">
                 <% Tags.forEach(function(tag) { %>
                     <div class="label label-primary">
-                        <input type="checkbox" id="<%=tag.nombre%>" name="tags" value="<%=tag.nombre%>">
+                        <input type="checkbox" name="tagFiltro" id="tagFiltro" class="checko" value="<%=tag.nombre%>">
                         <label for="<%=tag.nombre%>" ><%=tag.nombre%></label>
                     </div>
                     <br/>

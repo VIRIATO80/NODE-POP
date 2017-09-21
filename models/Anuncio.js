@@ -16,7 +16,6 @@ const anuncioSchema = new mongoose.Schema({
 
 //Añadimos métodos estáticos a nuestro modelo
 anuncioSchema.statics.list = function(filter, skip, limit, callback){
-    console.log('llega');
     const query = Anuncio.find(filter);
     query.skip(skip);
     query.limit(limit);

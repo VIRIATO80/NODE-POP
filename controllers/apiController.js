@@ -41,15 +41,16 @@ Ejemplo:
 */
 exports.getAnunciosFiltrados = async (req, res, next) =>{
     
-    const tag = req.query.tag;
+    const tags = req.query.tags;
     const venta = req.query.venta;
     const nombre = req.query.nombre;
     const precio = req.query.precio;
     const filter = {};
 
-    if(tag){
+    if(tags){
       let lista = [];
-      lista[0] = tag;
+      lista = tags;
+      console.log(lista);
       filter.tags = { $in: lista } ;
     }
 
@@ -93,16 +94,18 @@ exports.cargarFormularioCreacion = async function(req, res, next){
 
 
 /* POST Guarda un anuncio vía POST*/
-exports.guardarAnuncio = async function(req, res, next) {
-  
+exports.guardarAnuncio = async (req, res, next) => {
+  console.log(req.body);
   //Recuperamos los datos en el body del método
   //Creamos un nuevo agente
   const anuncio = new Anuncio(req.body);
+  console.log(anuncio);
   //Lo guardamos en la base de datos
   const anuncioGuardado = await anuncio.save();
-
+console.log(1);
   //Vemos si viene de la web o es una llamada pura al API
   if(req.query.web){
+    console.log(2);
     res.redirect('/');
   }else{
     res.json({success: true, result: anuncioGuardado});
