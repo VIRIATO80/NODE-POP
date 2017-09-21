@@ -1,49 +1,97 @@
+'use strict';
+//Valores globales
 
-//Valores del slider de filtro
+//Filtro total
+let filtro = {};
+
+//Valores del slider de precios
 var values = ['Desde 10€', 'De 10€ a 50€', 'Hasta 50€', 'Más de 50€'];
 
 
 //Filtros del buscador de la página
 
-
-$('#name').on('keyup', function(e){
+//Filtro para el nombre
+$('#name').on('keyup', function(){
+    
     let valor = this.value;
     //Filtramos si el nombre es más largo de 3 caracteres
     if(valor.length > 3){
-
-        $.ajax({
-            url : '/api/busqueda',
-            data : { nombre : valor },
-            type : 'GET',
-             // el tipo de información que se espera de respuesta
-            dataType : 'json', 
-            // código a ejecutar si la petición es satisfactoria;
-            success : function(data) {
-                let resultadoHTML ='';
-                $.each(data, function(index, elemento) {
-                    resultadoHTML += pintarElemento(elemento);
-                });
-                $('#listadoAnuncios').html(resultadoHTML);
-            },     
-            // código a ejecutar si la petición falla;
-            error : function(xhr, status) {
-                alert('Disculpe, existió un problema');
-            }
-        });
+        filtro.nombre = valor;
+    }else if(valor.length == 0){
+        filtro.nombre = null;
     }
+    llamadaAjax();
 });
 
 
+//Filtro por categoría de venta / búsqueda
+$('#venta').change(function() {
+
+    let valor;
+
+    if($('#venta').val() == 'V'){
+        valor = true;
+    }else if($('#venta').val() == 'B'){
+        valor= false;
+    }else{
+        valor = null;
+    }
+    filtro.venta = valor;
+    llamadaAjax();
+});
 
 
-
-
-
-
-
+//Filtro por precio
 $('#slider1').change(function() {
     $('#mensajeSlider').text(values[this.value]);
+    let valor = '50';
+    switch(this.value) {
+        case '0':
+            valor = '10-';
+            break;
+        case '1':
+            valor = '10-50';
+            break;
+        case '2':
+            valor = '-50';
+            break;
+        case '3':
+            valor = '+50';
+            break;            
+        default:
+            valor = '10-';
+    }
+
+    filtro.precio = valor;
+    llamadaAjax();
 });
+
+
+
+//MÉTODOS AUXILIARES
+//Llamada genérica a Ajax con el filtro global
+function llamadaAjax(){
+    $.ajax({
+        url : '/api/busqueda',
+        data : filtro,
+        type : 'GET',
+        // el tipo de información que se espera de respuesta
+        dataType : 'json', 
+        // código a ejecutar si la petición es satisfactoria;
+        success : function(data) {
+            let resultadoHTML ='';
+            $.each(data, function(index, elemento) {
+                resultadoHTML += pintarElemento(elemento);
+            });
+            $('#listadoAnuncios').html(resultadoHTML);
+        },     
+        // código a ejecutar si la petición falla;
+        error : function() {
+            console.log('Disculpe, existió un problema');
+        }
+    });
+}
+
 
 //Método para pintar el html de un elemento Anuncio
 function pintarElemento(anuncio){
@@ -53,7 +101,7 @@ function pintarElemento(anuncio){
         if(anuncio.venta){
             html+=`<div class="card card-header venta">VENDO</div>`;
         }else{
-            html+=`<div class="card card-header busqueda">BUSCO</div>`
+            html+=`<div class="card card-header busqueda">BUSCO</div>`;
         }
         html+=`<a href="#"><img class="card-img-top" src='images/${anuncio.foto}' alt=""></a>
         <div class="card-body">
@@ -68,9 +116,9 @@ function pintarElemento(anuncio){
         for (var i = 0; i < anuncio.tags.length; i++) {
             html+=`<span class="label label-primary">${anuncio.tags[i]}</span>`;
         }
-        
+            
     html+=`</div>
-    </div>
+       </div>
     </div>`;
     return html;
-};              
+}

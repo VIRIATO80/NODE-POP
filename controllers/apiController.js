@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const mongoose = require('mongoose');
 const Anuncio = mongoose.model('Anuncio');
@@ -6,24 +6,24 @@ const Tag = mongoose.model('Tag');
 
 
 /*Lista todos los anuncios de la base de datos en formato JSON o html*/
-exports.getListadoAnuncios = async (req, res, next) =>{
+exports.getListadoAnuncios = async function home(req, res, next){
     const Anuncios = await Anuncio.find();
 
     if(req.baseUrl.indexOf('/api') != -1){//Si la petición proviene del api, devolvemos JSON
-        res.json({success: true, rows: Anuncios});    
+        res.json(Anuncios);    
     }else{//Si la petición es para la web, renderizamos el portal y por ello necesitamos también pedir los tags
         const Tags = await Tag.find();
         res.render('index', { title: 'NodePop!', Anuncios: Anuncios, Tags: Tags });
-    }
-    
+    }  
 }
 
 
-/*Lista todos los tags de la base de datos en formato JSON*/
+//Lista todos los tags de la base de datos en formato JSON
 exports.getListadoTags = async (req, res, next) =>{
+  
     //Query para listar todos los tags disponibles para los artículos de la tienda
     const Tags = await Tag.find();
-    res.json({success: true, rows: Tags});    
+    res.json(Tags);    
 }
 
 
@@ -71,6 +71,8 @@ exports.getAnunciosFiltrados = async (req, res, next) =>{
           filter.precio = { '$gte': '10', '$lte': '50' };          
       }else if (precio === '-50'){
           filter.precio = { '$lte': '50' };
+      }else if (precio === '+50'){
+        filter.precio = { '$gte': '50' };
       }else{
         filter.precio = '50';
       }
@@ -82,13 +84,27 @@ exports.getAnunciosFiltrados = async (req, res, next) =>{
     res.json(Anuncios);
 }
 
+
+/*Carga la página del formulario de creación de anuncios*/
+exports.cargarFormularioCreacion = async function(req, res, next){
+    const Tags = await Tag.find();
+    res.render('addAnuncio', { title: 'Crear Anuncio', Tags: Tags });
+};
+
+
 /* POST Guarda un anuncio vía POST*/
 exports.guardarAnuncio = async function(req, res, next) {
   
   //Recuperamos los datos en el body del método
   //Creamos un nuevo agente
-  const agente = new Anuncio(req.body);
+  const anuncio = new Anuncio(req.body);
   //Lo guardamos en la base de datos
-  const agenteGuardado = await agente.save();
-  res.json({success: true, result: agenteGuardado});
+  const anuncioGuardado = await anuncio.save();
+
+  //Vemos si viene de la web o es una llamada pura al API
+  if(req.query.web){
+    res.redirect('/');
+  }else{
+    res.json({success: true, result: anuncioGuardado});
+  } 
 }

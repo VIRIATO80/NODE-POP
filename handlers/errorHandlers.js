@@ -1,3 +1,5 @@
+'use strict';
+
 /*
   Catch Errors Handler
 

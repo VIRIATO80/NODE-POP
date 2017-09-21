@@ -40,3 +40,8 @@ body {
     border: 1px solid #5bc0de;
     padding: 5px;
 }
+
+.centrada{
+    text-align: center;
+    padding: 20px;
+}

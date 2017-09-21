@@ -1,3 +1,5 @@
+'use strict';
+
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
@@ -19,7 +21,9 @@ anuncioSchema.statics.list = function(filter, skip, limit, callback){
     query.skip(skip);
     query.limit(limit);
     return query.exec(callback);//Es aquí donde ejecutamos la consulta
-}
+};
+
+
 //Crear el modelo
 const Anuncio = mongoose.model('Anuncio', anuncioSchema);
 

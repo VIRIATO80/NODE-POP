@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const express = require('express');
 const router = express.Router();
@@ -18,7 +18,7 @@ router.get('/busqueda', catchErrors(apiController.getAnunciosFiltrados));
 Lista todos los tags disponibles*/
 router.get('/tags', catchErrors(apiController.getListadoTags));
 
-/* POST /api/
+/* POST /api/crearAnuncio
 Guarda un anuncio vía petición POST*/
-router.post('/', catchErrors(apiController.guardarAnuncio));
+router.post('/crearAnuncio', catchErrors(apiController.guardarAnuncio));
 module.exports = router;
