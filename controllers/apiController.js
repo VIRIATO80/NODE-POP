@@ -31,10 +31,14 @@ exports.getListadoTags = async (req, res, next) =>{
 - Lista todos los anuncios de la base de datos en formato JSON o html que cumplen unos determinados criterios
 - Los parámetros se pasan vía req.query.
 -Los parametros aceptados son los siguientes:
-    +tag = Categoría a la que pertenece el artículo
+    +tags = Categoría a la que pertenece el artículo
     +venta = Será true si el artículo está a la venta y false si se trata de una búsqueda de un particular
     +nombre = Contendrá parte del nombre de un artículo
     +precio = Rango del precio
+-Hay dos filtros para modificar el orden de la lista y el número de resultados
+    +sort = Ordena los resultados por el campo indicado (<campo> ascendente) (-<campo> Descendente)
+    +limit = Limita el número de resultados a devolver en el JSON
+    
 
 Ejemplo:
   /apiv1/anuncios?tag=mobile&venta=false&nombre=ip&precio=50-&start=0&limit=2&sort=precio
@@ -45,12 +49,20 @@ exports.getAnunciosFiltrados = async (req, res, next) =>{
     const venta = req.query.venta;
     const nombre = req.query.nombre;
     const precio = req.query.precio;
+    //Criterio de ordenación
+    const sorter = req.query.sorter;
+    //Número de resultados a mostrar
+    const limite = req.query.limite;
+    //Número de anuncio desde el que comienzo a mostrar
+    const start = req.query.start;
+
+    //Declaración del filtro vacío
     const filter = {};
 
+    //Si se ha buscado por uno varios tags
     if(tags){
       let lista = [];
       lista = tags;
-      console.log(lista);
       filter.tags = { $in: lista } ;
     }
 
@@ -80,8 +92,8 @@ exports.getAnunciosFiltrados = async (req, res, next) =>{
     }      
 
     //Recuperar una lista de anuncios de la base de datos
-    const Anuncios = await Anuncio.find(filter);
-    //Si la petición proviene del api, devolvemos JSON
+    const Anuncios = await Anuncio.find(filter).limit(parseInt(limite)).skip(parseInt(start)).sort(sorter);
+    //Devolvemos JSON de resultados
     res.json(Anuncios);
 }
 
@@ -95,17 +107,13 @@ exports.cargarFormularioCreacion = async function(req, res, next){
 
 /* POST Guarda un anuncio vía POST*/
 exports.guardarAnuncio = async (req, res, next) => {
-  console.log(req.body);
   //Recuperamos los datos en el body del método
-  //Creamos un nuevo agente
   const anuncio = new Anuncio(req.body);
-  console.log(anuncio);
   //Lo guardamos en la base de datos
   const anuncioGuardado = await anuncio.save();
 console.log(1);
   //Vemos si viene de la web o es una llamada pura al API
   if(req.query.web){
-    console.log(2);
     res.redirect('/');
   }else{
     res.json({success: true, result: anuncioGuardado});

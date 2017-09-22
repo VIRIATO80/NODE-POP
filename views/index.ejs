@@ -8,11 +8,9 @@
 
         <% include filtros %>
 
-
         <div class="col-lg-9">
-          <div class="row">
-            &nbsp;
-          </div>
+          <!--Filtro de ordenación y paginación-->
+          <% include filtroSuperior %>
           <!--Listado de productos-->
           <div class="row" id="listadoAnuncios">
             <% Anuncios.forEach(function(anuncio) { %>

@@ -22,7 +22,6 @@ exports.catchErrors = (fn) => {
   If we hit a route that is not found, we mark it as 404 and pass it along to the next error handler to display
 */
 exports.notFound = (req, res, next) => {
-  console.log('No encontrado');
   const err = new Error('Not Found');
   err.status = 404;
   next(err,req,res);
@@ -35,15 +34,16 @@ exports.notFound = (req, res, next) => {
   No stacktraces are leaked to user
 */
 exports.productionErrors = (err, req, res, next) => {
-  
-  let error = new CustomError(err.status, 'en');
-  res.json({'Error': error.message});
-
-  /*
-  res.status(err.status || 500);
-  if()
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });*/
+  const idioma = req.query.idioma;
+  let error = new CustomError(err.status||500, idioma);
+  if(isAPI(req)){//Si venimos de una petición web, usamos la página de error para mostrar el error
+    res.json({'Error': error.message});
+    return;
+  }
+  res.render('error', { title: 'NodePop!', cabecera: 'Error', mensaje: error.message});
 };
+
+
+function isAPI(req){
+  return req.originalUrl.indexOf('/api') === 0;
+}

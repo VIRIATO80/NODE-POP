@@ -76,7 +76,30 @@ $('#slider1').change(function() {
     llamadaAjax();
 });
 
+//FILTROS DE ORDENACIÓN y PAGINACIÓN
+//Filtro de ordenación
+$('#orden').change(function() {
 
+    let valor;
+
+    if($('#orden').val() != ''){
+        valor = $('#orden').val();
+    }
+    filtro.sorter = valor;
+    llamadaAjax();
+});
+
+//Límite de resultados
+$('#limite').change(function() {
+
+    let valor;
+
+    if($('#limite').val() != ''){
+        valor = $('#limite').val();
+    }
+    filtro.limite = valor;
+    llamadaAjax();
+});
 
 //MÉTODOS AUXILIARES
 //Llamada genérica a Ajax con el filtro global
