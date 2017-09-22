@@ -6,7 +6,7 @@ var mensajesES = require('./spanish');
 
 //Constructor de error
 module.exports = function CustomError(code, idioma) {
-  var value = 'Error'
+  var value = 'Error';
   if(idioma == 'es'){
     value = mensajesES[code];
   }else{

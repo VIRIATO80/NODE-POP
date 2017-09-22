@@ -3,10 +3,10 @@
 const mongoose = require('mongoose');
 const Anuncio = mongoose.model('Anuncio');
 const Tag = mongoose.model('Tag');
+mongoose.Promise = global.Promise;
 
-
-/*Lista todos los anuncios de la base de datos en formato JSON o html*/
-exports.getListadoAnuncios = async function home(req, res, next){
+//Lista todos los anuncios de la base de datos en formato JSON o html
+exports.getListadoAnuncios = async (req, res, next) =>{
     const Anuncios = await Anuncio.find();
 
     if(req.baseUrl.indexOf('/api') != -1){//Si la petición proviene del api, devolvemos JSON

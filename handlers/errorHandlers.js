@@ -33,7 +33,7 @@ exports.notFound = (req, res, next) => {
 
   No stacktraces are leaked to user
 */
-exports.productionErrors = (err, req, res, next) => {
+exports.productionErrors = (err, req, res) => {
   const idioma = req.query.idioma;
   let error = new CustomError(err.status||500, idioma);
   if(isAPI(req)){//Si venimos de una petición web, usamos la página de error para mostrar el error

@@ -17,7 +17,7 @@ $('#name').on('keyup', function(){
     //Filtramos si el nombre es más largo de 3 caracteres
     if(valor.length > 3){
         filtro.nombre = valor;
-    }else if(valor.length == 0){
+    }else if(valor.length === 0){
         filtro.nombre = null;
     }
     llamadaAjax();
@@ -82,7 +82,7 @@ $('#orden').change(function() {
 
     let valor;
 
-    if($('#orden').val() != ''){
+    if($('#orden').val() !== ''){
         valor = $('#orden').val();
     }
     filtro.sorter = valor;
@@ -94,7 +94,7 @@ $('#limite').change(function() {
 
     let valor;
 
-    if($('#limite').val() != ''){
+    if($('#limite').val() !== ''){
         valor = $('#limite').val();
     }
     filtro.limite = valor;
