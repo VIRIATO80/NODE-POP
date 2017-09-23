@@ -1,4 +1,9 @@
 {
+    "400": "Petición errónea",
+    "401": "No autorizado",
+    "403": "Prohibido",
     "404": "No encontrado",
-    "500": "Error interno del servidor"
+    "415": "Formato no soportado",    
+    "500": "Error interno del servidor",
+    "503": "Service no disponible"
 }

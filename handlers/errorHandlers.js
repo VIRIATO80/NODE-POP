@@ -18,22 +18,19 @@ exports.catchErrors = (fn) => {
 
 /*
   Not Found Error Handler
-
-  If we hit a route that is not found, we mark it as 404 and pass it along to the next error handler to display
 */
 exports.notFound = (req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
-  next(err,req,res);
+  next(err, req, res);
 };
 
 
 /*
   Production Error Handler
-
-  No stacktraces are leaked to user
 */
-exports.productionErrors = (err, req, res) => {
+exports.productionErrors = (err, req, res, next) => {
+
   const idioma = req.query.idioma;
   let error = new CustomError(err.status||500, idioma);
   if(isAPI(req)){//Si venimos de una petición web, usamos la página de error para mostrar el error
@@ -44,6 +41,7 @@ exports.productionErrors = (err, req, res) => {
 };
 
 
+//Funcion que comprueba si la petición viene del API o de la web
 function isAPI(req){
   return req.originalUrl.indexOf('/api') === 0;
 }

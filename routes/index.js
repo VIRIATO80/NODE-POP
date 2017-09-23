@@ -13,5 +13,6 @@ router.get('/', catchErrors(apiController.getListadoAnuncios));
 router.get('/add', apiController.cargarFormularioCreacion);
 
 //Save store data
-router.post('/add', catchErrors(apiController.createStore));
+router.post('/add', apiController.upload, catchErrors(apiController.guardarAnuncio));
+
 module.exports = router;

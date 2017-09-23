@@ -26,7 +26,6 @@ $('#name').on('keyup', function(){
 
 //Filtro por categoría de venta / búsqueda
 $('#modalidad').change(function() {
-
     let valor;
 
     if($('#modalidad').val() == 'V'){
@@ -116,6 +115,10 @@ function llamadaAjax(){
             $.each(data, function(index, elemento) {
                 resultadoHTML += pintarElemento(elemento);
             });
+            //Comprobamos que se arroja al menos un resultado
+            if(resultadoHTML === ''){
+                resultadoHTML = pintarCapaVacía();
+            }
             $('#listadoAnuncios').html(resultadoHTML);
         },     
         // código a ejecutar si la petición falla;
@@ -123,6 +126,12 @@ function llamadaAjax(){
             console.log('Disculpe, existió un problema');
         }
     });
+}
+
+
+//Método que se llama para pintar una capa vacía cuando no hay resultados al aplicar el filtro
+function pintarCapaVacía(){
+        return `<div class="col-md-1">&nbsp;</div><div class="col-md-11">No se han encontrado resultados para su búsqueda</div>`;
 }
 
 
@@ -136,7 +145,7 @@ function pintarElemento(anuncio){
         }else{
             html+=`<div class="card card-header busqueda">BUSCO</div>`;
         }
-        html+=`<a href="#"><img class="card-img-top" src='images/${anuncio.foto}' alt=""></a>
+        html+=`<a href="#"><img class="card-img-top" src='images/${anuncio.foto}' ></a>
         <div class="card-body">
          <h4 class="card-title">
                 <a href="#">${anuncio.nombre}</a>

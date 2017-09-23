@@ -12,7 +12,7 @@
           </div>
           <!--Formulario de alta-->
           <div class="row" id="listadoAnuncios">
-                 <form method="POST" action="/api/crearAnuncio?web=S" >
+                 <form method="POST" action="/add?web=S" enctype="multipart/form-data" >
                     <div class="row">
                         <div class="col-md-4">
                             <label for="nombre">Nombre:</label>
@@ -28,7 +28,15 @@
                         <div class="col-md-8">
                             <textarea  name="descripcion" id="descripcion" rows="5" cols="40"></textarea>
                         </div>
-                    </div>                    
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="">Foto:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="file" name="foto" id="foto" accept="image/gif, image/png, image/jpeg" >
+                        </div>
+                    </div>                                          
                     <div class="row">
                         <div class="col-md-4">
                             <label for="venta">Modalidad:</label>
