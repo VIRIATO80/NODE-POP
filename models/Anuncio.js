@@ -5,13 +5,13 @@ mongoose.Promise = global.Promise;
 
 
 const anuncioSchema = new mongoose.Schema({
-    nombre: String,
+    nombre:{type: String, index: true},
     descripcion: String,
-    venta: Boolean,
-    precio: Number,
+    venta: { type: Boolean, index: true},
+    precio: { type: Number, index: true},
     foto: String,
-    tags: [String]
-});
+    tags: { type: [String], index: true }
+}, , { autoIndex: false });
 
 
 //Crear el modelo
