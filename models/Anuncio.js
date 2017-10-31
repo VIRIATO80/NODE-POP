@@ -11,7 +11,7 @@ const anuncioSchema = new mongoose.Schema({
     precio: { type: Number, index: true},
     foto: String,
     tags: { type: [String], index: true }
-}, , { autoIndex: false });
+}, { autoIndex: false });
 
 
 //Crear el modelo

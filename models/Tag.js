@@ -7,7 +7,7 @@ mongoose.Promise = global.Promise;
 const tagSchema = new mongoose.Schema({
     nombre: String,
     descripcion: String,
-}, , { autoIndex: false });
+}, { autoIndex: false });
 
 //Crear el modelo
 const Tag = mongoose.model('Tag', tagSchema);
