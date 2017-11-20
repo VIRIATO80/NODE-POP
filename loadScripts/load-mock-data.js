@@ -8,7 +8,7 @@ dotenv.config({ path: 'variables.env' });
 
 //Importamos mongoose
 const mongoose = require('mongoose');
-const urlDB = 'mongodb://' + process.env.USER + ':' process.env.PASSWORD + '@' process.env.HOST + ':' process.env.PORT + '/' + process.env.DATABASE;
+const urlDB = 'mongodb://' + process.env.USER + ':' + process.env.PASSWORD + '@' + process.env.HOST + ':' + process.env.PORT + '/' + process.env.DATABASE;
 mongoose.connect( urlDB , { useMongoClient: true });
 
 
