@@ -8,7 +8,7 @@ dotenv.config({ path: 'variables.env' });
 
 //Importamos mongoose
 const mongoose = require('mongoose');
-const urlDB = 'mongodb://' + process.env.USER + ':' + process.env.PASSWORD + '@' + process.env.HOST + ':' + process.env.PUERTO + '/' + process.env.SCHEMA + '?authSource=' + process.env.SCHEMA;
+const urlDB = 'mongodb://' + process.env.USER + ':' + process.env.PASSWORD + '@' + process.env.HOST + ':' + process.env.PUERTO + '/' + process.env.SCHEMA + '?authSource=admin';
 mongoose.connect( urlDB , {auth:{authdb:process.env.SCHEMA}});
 
 
