@@ -9,8 +9,7 @@ dotenv.config({ path: 'variables.env' });
 //Importamos mongoose
 const mongoose = require('mongoose');
 const urlDB = 'mongodb://' + process.env.USER + ':' + process.env.PASSWORD + '@' + process.env.HOST + ':' + process.env.PUERTO + '/' + process.env.SCHEMA;
-console.log(urlDB);
-mongoose.connect( urlDB , { useMongoClient: true });
+mongoose.connect( urlDB , {useMongoClient: true});
 
 
 // importamos varios anuncios de un JSON
@@ -48,3 +47,14 @@ const tagsJSON = JSON.parse(fs.readFileSync(__dirname + '/tags.json', 'utf-8'));
 //Primero borramos y después insertamos los anuncios y los tags de prueba
 deleteData();
 loadData();
+
+
+// Connected handler
+mongoose.connection.on('connected', function (err) {
+  console.log("Connected to DB");
+});
+
+// Error handler
+mongoose.connection.on('error', function (err) {
+  console.log(err);
+});
