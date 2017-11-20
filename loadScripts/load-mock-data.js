@@ -8,8 +8,8 @@ dotenv.config({ path: 'variables.env' });
 
 //Importamos mongoose
 const mongoose = require('mongoose');
-const urlDB = 'mongodb://' + process.env.USER + ':' + process.env.PASSWORD + '@' + process.env.HOST + ':' + process.env.PUERTO + '/' + process.env.SCHEMA;
-mongoose.connect( urlDB , {auth:{authdb:"admin"}});
+const urlDB = 'mongodb://' + process.env.USER + ':' + process.env.PASSWORD + '@' + process.env.HOST + ':' + process.env.PUERTO + '/' + process.env.SCHEMA + '?authSource=' + process.env.SCHEMA;
+mongoose.connect( urlDB , {auth:{authdb:process.env.SCHEMA}});
 
 
 // importamos varios anuncios de un JSON
