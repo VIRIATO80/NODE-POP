@@ -8,7 +8,8 @@ dotenv.config({ path: 'variables.env' });
 
 //Importamos mongoose
 const mongoose = require('mongoose');
-mongoose.connect(process.env.DATABASE, { useMongoClient: true });
+const urlDB = 'mongodb://' + process.env.USER + ':' process.env.PASSWORD + '@' process.env.HOST + ':' process.env.PORT + '/' + process.env.DATABASE;
+mongoose.connect( urlDB , { useMongoClient: true });
 
 
 // importamos varios anuncios de un JSON
