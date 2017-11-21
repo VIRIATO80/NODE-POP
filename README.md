@@ -1,3 +1,13 @@
+# NOTA PARA PRÁCTICA DE DEVOPS
+
+La IP del servidor AWS es **54.173.86.52** y la DNS asociada **ec2-54-173-86-52.compute-1.amazonaws.com**. 
+Entrando por IP se muestra la web estática de la práctica de Fundamentos de HTML.
+
+El subdominio que he utilizado para mostrar *NodePop* es **http://nodepop.mrviriato.es**
+
+Se redirige al protocolo HTTPS
+
+
 # Instrucciones para NodePop
 En este documento explicaré los pasos necesarios para utilizar correctamente el API y el portal de la tienda *NodePop*.
 
